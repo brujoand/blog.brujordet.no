@@ -24,7 +24,7 @@ function shell_init_file() { # Returns what would be your initfile
 }
 ```
 
-This function checks if we're in an interactive shell or not, and loads bashrc
+This function checks if we're in an interactive shell or not, and returns bashrc
 if we are. If not it checks for the various login files.
 
 Thats all great, but now we need to figure out what files have been sourced from
@@ -51,7 +51,7 @@ file, and then calls `_sourced_files` to recursively check what files are then
 being sourced.
 
 Now we have some kind of idea about what is being configured in our shell. You
-might have noticed hat I add `# some description` after my function definitions?
+might have noticed that I add `# some description` after my function definitions?
 This is so I can get these two nifty helpers:
 
 ```bash
@@ -89,7 +89,7 @@ function wat() { # show help and location of a custom function or alias
 
 So after looking at what helpers I have available using `halp` I can use `wat`
 to show me exactly where it's defined, what it looks like and how it's
-auto completed. A sample output would look like this:
+auto completed. `wat` also has auto completion through the `_wat` function. A sample output would look like this:
 
 ```bash
 $> wat list_aliases
