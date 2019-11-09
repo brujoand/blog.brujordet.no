@@ -1,0 +1,12 @@
+baseURL = "https://blog.brujordet.no/"
+languageCode = "en-us"
+title = "Automate attention"
+theme = "m10c"
+googleAnalytics = "UA-30621068-2"
+
+[params]
+  avatar = "avatar.jpeg"
+  description = "Tools and techniques I use to make life easier"
+  [[params.social]]
+    name = "twitter"
+    url = "https://twitter.com/brujoand"

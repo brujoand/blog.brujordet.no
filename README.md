@@ -1,2 +1,1 @@
-# blog.brujordet.no
-My hugo blog
+# Just my blog
