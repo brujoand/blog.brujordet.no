@@ -19,7 +19,7 @@ function shell_init_file() { # Returns what would be your initfile
     echo ~/.profile
   else
     echo "Could not find any config files.."
-    exit 1
+    return 1
   fi
 }
 ```
@@ -47,8 +47,8 @@ function sourced_files() { # Lists files which (s/w)hould have been sourced to t
 ```
 
 The function `sourced_files` is just a wrapper that checks the initial config
-file, and then calls `_sourced_files` to recursively check what files are then
-being sourced.
+file, and then calls `_sourced_files` to check what files are then
+being sourced etc..
 
 Now we have some kind of idea about what is being configured in our shell. You
 might have noticed that I add `# some description` after my function definitions?
@@ -114,3 +114,6 @@ Unfortunately I haven't found a great way of pretty printing code on this blog t
 
 So since I tend to write a bunch of shell helpers this setup let's me know
 what's going on, where things are defined and what they do.
+
+
+Discussion: [reddit.com/r/bash - post](https://www.reddit.com/r/bash/comments/dtxaxu/3min_blogpost_whats_going_on_in_my_shell_helpers/)
