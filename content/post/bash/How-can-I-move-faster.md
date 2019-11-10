@@ -131,4 +131,8 @@ I should probably add that all of the above settings are set in my bash config,
 even the bind commands which should probably be set in `~/.inputrc`. One day
 I'll read up on the best practices for this, but not today.
 
+Also, a proper keyboard will speed things up :D
+
+<img src="/iris.jpeg" alt="drawing" width="75%"/>
+
 Discussion: [reddit.com/r/bash - post](https://www.reddit.com/r/bash/comments/dug79a/4min_how_can_i_move_faster_around_the_shell/)
