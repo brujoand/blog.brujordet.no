@@ -111,6 +111,7 @@ function list_functions() { # List all sourced functions
 
 Oh, and this output is pretty printed using `bat`, it's super nice :)
 Unfortunately I haven't found a great way of pretty printing code on this blog though :/
+(ha, finally figured it out. Pygments powered syntax highlighting)
 
 So since I tend to write a bunch of shell helpers this setup let's me know
 what's going on, where things are defined and what they do.

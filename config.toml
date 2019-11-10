@@ -3,6 +3,7 @@ languageCode = "en-us"
 title = "Automate attention"
 theme = "m10c"
 googleAnalytics = "UA-30621068-2"
+PygmentsCodeFences = true
 
 [params]
   avatar = "avatar.jpeg"
