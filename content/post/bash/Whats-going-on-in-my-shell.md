@@ -135,7 +135,7 @@ function _esc() { # Fuzzy tabcompletion for esc
   if [[ -z "$cur" ]]; then
     COMPREPLY=( $( compgen -W "$config_files" ) )
   else
-    COMPREPLY=( $(for file in $(sourced_files); do echo "${file##*/}"; done | grep -i "$cur") )
+    COMPREPLY=( $(grep -i "$cur" <<< "$config_files" ) )
   fi
 }
 complete -o nospace -F _esc esc
