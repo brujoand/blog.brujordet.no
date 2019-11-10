@@ -113,8 +113,30 @@ Oh, and this output is pretty printed using `bat`, it's super nice :)
 Unfortunately I haven't found a great way of pretty printing code on this blog though :/
 (ha, finally figured it out. Pygments powered syntax highlighting)
 
-So since I tend to write a bunch of shell helpers this setup let's me know
-what's going on, where things are defined and what they do.
+Now, the final touch. I can figure out what helpers I have, where they are
+defined, and what they do. Now I'd like to edit the config file containing some
+helper. Enter `esc`, which auto completes to my sourced files, and opens it with
+whatever I've set as my `$EDITOR`.
 
+```bash
+function esc() { # Edit a shell config file
+  local file
+  file=$(grep "/$1$" <(sourced_files))
+  "${EDITOR:-vi}" "$file"
+}
+
+function _esc() { # Fuzzy tabcompletion for esc
+  local cur config_files
+  _get_comp_words_by_ref cur
+  config_files=$(for file in $(sourced_files); do echo "${file##*/}"; done)
+
+  if [[ -z "$cur" ]]; then
+    COMPREPLY=( $( compgen -W "$config_files" ) )
+  else
+    COMPREPLY=( $(for file in $(sourced_files); do echo "${file##*/}"; done | grep -i "$cur") )
+  fi
+}
+complete -o nospace -F _esc esc
+```
 
 Discussion: [reddit.com/r/bash - post](https://www.reddit.com/r/bash/comments/dtxaxu/3min_blogpost_whats_going_on_in_my_shell_helpers/)
