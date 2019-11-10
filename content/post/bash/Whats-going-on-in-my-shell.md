@@ -2,6 +2,8 @@
 title: "What's going on in my shell?"
 date: 2019-11-09T15:13:36+01:00
 draft: false
+tags: ["bash", "automation"]
+categories: ["bash"]
 ---
 
 To help me figure this out, I use a few shell functions. Firstly, I need to know
