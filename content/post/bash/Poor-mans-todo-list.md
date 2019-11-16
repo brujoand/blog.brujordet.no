@@ -92,7 +92,7 @@ And it looks pretty awesome to me, but I'm no front end wiz.
 
 ## Making the most of the time at hand
 
-I like music, but sometimes it's just in the way because what I really want is
+I like music, but sometimes its just in the way because what I really want is to
 block everything out. My noise canceling headphones do help, but I also like to
 spin up some white noise. From the terminal.
 
@@ -126,7 +126,7 @@ function timer() { # takes number of hours and minutes + message and notifies yo
   shift
   message=$*
   if [[ -z "$message" ]]; then
-    pritnf '%s' "error: ne need a message as well " >&2; return 1
+    printf '%s' "error: ne need a message as well" >&2; return 1
   fi
 
   (nohup terminal-notifier -title "Timer: $message" -message "Waiting for ${time_hm}" > /dev/null &)
@@ -145,3 +145,5 @@ Oh, and the `>&2` is for writing to `stderr`
 
 I did plan to add a sound to this timer, but I don't seem to need it, so maybe
 some other time.
+
+Discussion: [reddit.com/r/bash - post](https://www.reddit.com/r/bash/comments/dx6w5r/5min_blogpost_a_poor_mans_todo_list_and_white/)
