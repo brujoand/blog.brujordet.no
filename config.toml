@@ -6,7 +6,7 @@ theme = "m10c"
 PygmentsCodeFences = true
 
 [params]
-  avatar = "avatar.jpeg"
+  avatar = "avatar.png"
   description = "Tools and techniques I use to make life easier"
   [[params.social]]
     name = "twitter"
