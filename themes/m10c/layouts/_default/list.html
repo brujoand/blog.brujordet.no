@@ -1,6 +1,13 @@
 {{ define "main" }}
   <article>
-    <h1>{{ .Title }}</h1>
+    <h1>{{ .Title | humanize }}</h1>
+    <ul class="shit-list">
+      <li><a href="/">All</a> ({{.Site.RegularPages | len}})</li>
+      {{ range $key, $value := .Site.Taxonomies.categories }}
+        <li><a href="/categories/{{ $key | urlize  }}">{{ $key | humanize }}</a> ({{ len $value }})</li>
+      {{ end }}
+    </ul>
+    <hr>
     <ul class="posts-list">
       {{ range $index, $element := .Paginator.Pages }}
         <li class="posts-list-item">

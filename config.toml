@@ -1,6 +1,7 @@
 baseURL = "https://blog.brujordet.no/"
 languageCode = "en-us"
 title = "Automate attention"
+author = "Anders Brujordet"
 theme = "m10c"
 PygmentsCodeFences = true
 
@@ -10,3 +11,9 @@ PygmentsCodeFences = true
   [[params.social]]
     name = "twitter"
     url = "https://twitter.com/brujoand"
+  [[params.social]]
+    name = "linkedin"
+    url = "https://www.linkedin.com/in/brujoand"
+  [[params.social]]
+    name = "github"
+    url = "https://www.github.com/brujoand"

@@ -14,24 +14,16 @@
     {{ template "_internal/twitter_cards.html" . }}
     {{ template "_internal/opengraph.html" . }}
 
-
   </head>
   <body>
     <header class="app-header">
       <a href="{{ .Site.BaseURL }}"><img class="app-header-avatar" src="{{ .Site.Params.avatar | default "avatar.jpg" | relURL }}" alt="{{ .Site.Params.author | default "John Doe" }}" /></a>
       <h1>{{ .Site.Title }}</h1>
       <p>{{ .Site.Params.description | default "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vehicula turpis sit amet elit pretium." }}</p>
-      <div class="app-header-categories">
-        <ul>
-          <li><a href="/about">About</a></li>
-          {{ range $key, $value := .Site.Taxonomies.categories }}
-            <li><a href="/categories/{{ $key | urlize  }}">{{ $key | humanize }}</a> ({{ len $value }})</li>
-          {{ end }}
-        </ul>
-      </div>
+      <a href="{{ .Site.BaseURL }}/about">About me</a>
       <div class="app-header-social">
         {{ range .Site.Params.social }}
-          <a target="_blank" href="{{ .url }}">{{ partial "icon.html" (dict "ctx" $ "name" .name ) }}</a>
+          <a target="_blank" href="{{ .url }}" rel="noreferrer noopener">{{ partial "icon.html" (dict "ctx" $ "name" .name ) }}</a>
         {{ end }}
       </div>
     </header>
