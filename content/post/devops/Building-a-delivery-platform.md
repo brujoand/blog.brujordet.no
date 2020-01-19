@@ -19,35 +19,35 @@ When I eventually moved on to new adventures I was surprised to learn that this
 was far from the norm. As a result I ended up trying to improve upon the delivery process
 wherever I worked. Eventually it became my full time job when I joined Schibsted to help
 create a Delivery Platform for about 1500 developers scattered around the
-globe. It was an awesome experiences that one of my old co-workers have written
+globe. It was an awesome experience that one of my old co-workers have written
 well about
 [here](https://srvaroa.github.io/paas/infrastructure/platform/kubernetes/cloud/2020/01/02/talk-how-to-build-a-paas-for-1500-engineers.html)
-(Adevinta used to be a part of Schibsted)
+(Adevinta used to be a part of Schibsted btw)
 Based on my experiences there are a few key elements, or steps if you will to doing
-this well. And I want to explore theme here.
+this well. And I want to try to explore and generalize theme here.
 
 ## Know where you are
-If you don't know where you are, there is no way in you'll figure where you
-need to go. So my first priority has always been to get good automated
+If you don't know where you are, there is no way you'll figure where you
+need to go. So the top priority should be to get good automated
 dashboards that show our current state. [Smashing](https://smashing.github.io/)
-is a great tool for this, because it let's you write simple jobs that extract
-data and it's very easy to massage the data in any way you want and push it into
-graphs, speedometers or any visualization you want really. I'm a huge fan
-of Grafana, but when you are just starting out, the world is a rough place, and
-you need to scrape logs, convert data between formats and integrate with legacy tools
-that might not even have APIs. We don't have that luxury early on.
+is a great tool for this because it let's you write simple jobs that extract
+data from your existing tools and it's very easy to massage the data in any way you want and push it into
+graphs, speedometers or any visualization really. I'm a huge fan
+of Grafana, but when you are just starting out on this journey the world is a rough place, and
+you need to scrape logs, convert data and integrate with legacy tools
+that might not even have APIs. We don't have the luxury of Grafana early on.
 
-But the value here is to see where you are, which things are slow, which are
+The value here is to get a snapshot of the system, which things are slow, which are
 fast. Where should you focus your efforts first to get traction. There is also
 the inescapable truth that even though management cared enough about "DevOps"
 to hire you, they might not be so motivated if they can't see any impact. Graphs
-are like magic to management, use it. Use the force.
+are like magic force to management. Use the force.
 
 Interviewing members of various teams who will be using your platform will also
 give invaluable insight into the current frustrations and the hopes and dreams
 of your users. This is key later on when you might need to motivate them to
 on board. If it doesn't provide added value to them, they will not spend time on
-adopting your tools. They will probably have to justify spending time on
+adopting your tools. They in turn will probably have to justify spending time on
 improving their process, make sure you provide them with metrics and arguments
 to do so.
 
@@ -73,10 +73,10 @@ the recommended approach. The drawback here which you will undoubtedly hear, is
 y". The gut reaction to these objections are often defensive, but they shouldn't
 be. The golden path should provide everything for free, but it should also be
 easy to step outside when needed. In so doing, the teams should be aware
-however, that they own that extra mile.
+however, that they own that extra mile until they are back on our path.
 
-Let's say that to enroll in your golden path, all you need to do is to add a
-`paas.yml` to your git repo:
+An example is probably helpful. Let's say that to enroll in your golden path,
+all you need to do is to add a `paas.yml` to your git repo:
 
 ```yaml
 version: 2
@@ -103,36 +103,39 @@ ports:
 replicas:
   maximum: 10
   minimum: 20
+SonarQube:
+- enabled: false
+
 ```
 
 This worked very well for us by providing a full working pipeline for free, that
 takes your application from source to running in production. But when needed the
-power of the underlying tools are readily available. In this way the teams get
-to decide on their own how much of their configuration and integrations they
-want to own.
+power of the underlying tools are readily available by using the k8s API for
+instance. In this way the teams get to decide on their own how much of their
+configuration and integrations they want to own.
 
 What makes sense for one company might not fit another so this becomes an
-exercise and communication and analysis, to find a golden path that will help
+exercise in communication and analysis to find a golden path that will help
 the most teams in your company. One caveat with having these yaml files for
 defining how an application should be treated is that you might end up defining
-everything there.
+everything there. Lots of configuration that might be hard to change later.
 
 ## Convention over configuration
 I'm a big fan of convention over configuration and if you manage to
-utilize that it will be much easier to add tools and services later without
+utilize that, it will be much easier to add tools and services later without
 adding extra specific configuration. For instance our `dogfood-api` could
 generate a maven artifact named `no.company.git_org:git_repo` and when
 integrating with SonarQube for instance you would use this artifact name as the
 identifier. Suddenly you can deduce the name of the application in SonarQube
 just from looking at how it is named in git. If there is a predictable way of
 navigating your tooling it is very easy to add dashboards and metrics later on
-without manually mapping an applications integrations with different tools.
+without manually mapping an applications integrations to different tools.
 
 The cost with this approach is that it becomes crucial to document these
 conventions and to automatically nudge people if they aren't being followed.
 Usually it is easiest to provide these integrations for free without the need
-for configuration such that every supported build will automatically create a
-report in SonarQube.
+for configuration such that every build using the golden path will automatically create a
+report in SonarQube for instance.
 
 ## Defining your success metrics
 At this point we have an idea of how we want to connect these pieces together to
@@ -215,7 +218,7 @@ hadn't payed much attention to these features initially because they seemed
 trivial and considering all the new features they were getting.. Well. We didn't
 pay attention.
 When you're replacing something old with something new and
-better. It's not better if it doesn't match the existing feature set, because
+better it's not better if it doesn't match the existing feature set, because
 that means more change for the team. It might seem trivial from a technical
 point of view, but we humans don't think that way. We have an aversion to loss,
 or rather [loss aversion](https://en.wikipedia.org/wiki/Loss_aversion). We prefer
@@ -225,8 +228,9 @@ This is just one example but you'll find that psychology plays a huge role when
 you are dealing with people and change. I highly recommended the book [Thinking,
 Fast and Slow](https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow) by Daniel
 Kahneman. It casts some light on cognitive biases and how we tend to think
-either reactively and instinctively or logically and analytically. It's crucial
-that we can identify both and even appeal to logic when needed.
+either reactively and instinctively or logically and analytically depending on a
+multitude of factors. It's crucial that we can identify both ways of thinking
+and even appeal to logic when needed.
 
 ## Unified support channels
 So we've started to on board teams and everything is going great! But what is
@@ -240,7 +244,8 @@ An approach that seemed to work was to have every platform team do their own sup
 would create Slack channels and Jira projects, so bugs and feature requests
 would go into Jira, and incidents and discussions would go to Slack. At first
 this worked great. Our users were really happy to be able to reach us on slack,
-and most of them were really motivated to use our tools. After a while though
+and most of them were really motivated to use our tools so they would help with
+pull requests when something was wrong or missing. After a while though
 slack got really busy, and we started directing people towards Jira instead.
 That helped a lot but we weren't getting as much tickets as we would have
 expected. The problem, we later found, was that our users didn't know where to
@@ -251,8 +256,10 @@ forwarded somewhere else. This became a nightmare in terms of user experience,
 because our users weren't getting the right help.
 
 Our solution was to create a unified Help Center. It was basically just a
-confluence page with form to create a ticket in a unified Jira project.
-The ticket followed a template asking some key questions which  would give
+confluence page with form to create a ticket in a Jira project. But it gave our
+users a single point of entry. No need to guess where a ticket should be
+directed.
+The ticket followed a template asking some key questions which would give
 the person on call for the Help Center enough information to
 route it to the relevant team. Serving on rotation for a help center like this
 isn't glorious, but it solves a lot of problems, and it makes the user experience
