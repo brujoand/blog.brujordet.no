@@ -5,13 +5,17 @@ tags: ["devops", "infrastructure", "paas"]
 categories: ["devops"]
 draft: false
 ---
+</br>
 
+<img src="/Theodor_Kittelsen_Soria_Moria.png" alt="Til Soria Moria slott" width="75%"/>
+
+## A journey begins
 Almost 10 years ago I finished my Masters degree in Computer Science and started
 working as a consultant at KnowIt in Oslo. My team was in charge of developing the
 integration bus for the local municipality, and we had earned a lot of freedom with
 the client. We ran our own Hudson build server, we were early adopters of self hosted
 Github enterprise, and we deployed to production at will using a suite of in house ruby
-scripts. We had monitoring, logging and configuration was provisioned through puppet.
+scripts. We had monitoring, logging and even configuration was provisioned through puppet.
 But we had never heard of DevOps. This was all thanks to a couple of very skilled people who
 pushed for this way of working, and we all really enjoyed it. It just made sense to us.
 
@@ -26,6 +30,21 @@ well about
 Based on my experiences there are a few key elements, or steps if you will to doing
 this well. And I want to try to explore and generalize theme here.
 
+
+## A Delivery What Now?
+Unfortunately the tech industry and especially the part that deals with
+automating infrastructure and tooling is riddled with buzzwords and phrases that
+mean different things in different contexts. What I mean by a Delivery Platform
+is this; A set of tools and services that can be composed into a coherent and
+intuitive pipeline that brings source code into production in a safe, predictable and
+repeatable manner. A pipeline in this sense then becomes a list of tasks, where
+the output of previous tasks is the input for later tasks. These tasks can be
+chained and even trigger other pipelines. You are then left with a language which
+describes the entire process your application goes through.
+
+</br>
+<img src="/you_are_here.png" alt="You are here" width="75%"/>
+
 ## Know where you are
 If you don't know where you are, there is no way you'll figure where you
 need to go. So the top priority should be to get good automated
@@ -35,13 +54,13 @@ data from your existing tools and it's very easy to massage the data in any way 
 graphs, speedometers or any visualization really. I'm a huge fan
 of Grafana, but when you are just starting out on this journey the world is a rough place, and
 you need to scrape logs, convert data and integrate with legacy tools
-that might not even have APIs. We don't have the luxury of Grafana early on.
+that might not even have APIs. Well, you don't have that kind of luxury early on.
 
 The value here is to get a snapshot of the system, which things are slow, which are
 fast. Where should you focus your efforts first to get traction. There is also
 the inescapable truth that even though management cared enough about "DevOps"
 to hire you, they might not be so motivated if they can't see any impact. Graphs
-are like magic force to management. Use the force.
+are like a magic force to management. Use the force.
 
 Interviewing members of various teams who will be using your platform will also
 give invaluable insight into the current frustrations and the hopes and dreams
@@ -53,6 +72,7 @@ to do so.
 
 This knowledge lets you start planning out where you want to go, and what your
 missing to get there.
+
 
 ## The Golden Path
 There are two typically two ways of building these platforms. Either you provide
@@ -87,7 +107,7 @@ And that's it. This yaml file might actually just be an override to a default
 shared configuration that holds all the default integrations like static code
 analysis, vulnerability scans and how to deploy the application. At Schibsted we
 used [fiaas](https://fiaas.github.io/) for this. Usually the
-defaults wouldn't be enough so you might want to override some of them like so:
+defaults wont be enough so you might want to override some of them like so:
 
 ```yaml
 version: 2
@@ -108,8 +128,9 @@ SonarQube:
 
 ```
 
-This worked very well for us by providing a full working pipeline for free, that
-takes your application from source to running in production. But when needed the
+This worked very well for us by providing a fully working pipeline with little
+to no configuration, that takes your application all the way from source to
+running in production. But when needed the
 power of the underlying tools are readily available by using the k8s API for
 instance. In this way the teams get to decide on their own how much of their
 configuration and integrations they want to own.
@@ -120,7 +141,10 @@ the most teams in your company. One caveat with having these yaml files for
 defining how an application should be treated is that you might end up defining
 everything there. Lots of configuration that might be hard to change later.
 
+
 ## Convention over configuration
+What if you had to be reminded of all the conventions you rely on every day?
+How would that influence your productivity?
 I'm a big fan of convention over configuration and if you manage to
 utilize that, it will be much easier to add tools and services later without
 adding extra specific configuration. For instance our `dogfood-api` could
@@ -136,6 +160,9 @@ conventions and to automatically nudge people if they aren't being followed.
 Usually it is easiest to provide these integrations for free without the need
 for configuration such that every build using the golden path will automatically create a
 report in SonarQube for instance.
+
+</br>
+<img src="/dwight.png" alt="Salesman of the year" width="75%"/>
 
 ## Defining your success metrics
 At this point we have an idea of how we want to connect these pieces together to
@@ -160,33 +187,41 @@ check or even encourage them to think bigger. You won't get far if you don't
 have buy in from your key stakeholders.
 
 Finally there should be metrics that display the efforts of the teams. Did
-someone just squash 100 bugs? Well salute that hero with banners, bread and
+someone just squash 100 bugs? Well salute that angel of light with banners, bread and
 cheese! Great efforts should be displayed to everyone and focus on the team or
-person. Problems or missing configuration should be shown to the relevant teams
-only and be presented as a "Fix these things to have moar happy!". You get the
-idea, use the carrot, not the stick.
+the person. Problems or missing configuration should be shown to the relevant teams
+only and be presented more as a todo list. You get the idea, use the carrot, not the stick.
+Even if you are working with Dwight Schrute. Not only does this tend to
+encourage the teams on display, but when other people see that someone is using
+your platform and nailing it, they might want to try it too.
+
 
 ## Eat your own dog food
 At this point we know where we are, where we want to go and we have an idea
 about how to get there. So we start working and setting up some tools and integrations.
 It's very tempting to start on boarding teams right away. But there will always
 be bugs, and if you make your users your testers they will not trust you. Trust
-is everything for a Delivery Platform. We are nannies and the developers leaving
+is everything for a Delivery Platform. We are nannies and the developers are leaving
 us with the responsibility of taking care of their babies.
 We clothe them, check that they are warm and secure and safely send them to school.
-If we can't be trusted, we are useless and wasting our time.
+If we can't be trusted, we are useless and wasting our time and everyone else's
+time.
 
-As far as possible I like to use our common tooling to deploy all of our
-platform services. And as an added measure it's usually very useful to setup a
+As far as possible I like to use our common tooling to deploy all of our own
+platform services. And as an added measure it's useful to setup a
 skeleton application to serve as a blueprint for how to get started. This
 application should be built frequently so it can function as a canary to alert
-us if we've changed something that might brake things.
+us if we've changed something that might brake things for other users.
+
+</br>
+<img src="/rotten-apples.jpg" alt="Very low hanging fruits" width="75%"/>
 
 ## Low hanging fruits
 Setting up a platform like this is costly, both in terms of money but also
 politically. You will most likely feel the pressure to deliver value fast. One
 common problem I've hit is that to get the most impact you target the big
-players first. Surely if they are on boarded the rest will be super easy?!
+players first. They will make for a great example of our success and surely,
+if they are on boarded, the rest will be super easy?!
 
 There's been a few key problems with this approach in my experience. Firstly,
 the earliest adopters will always find the most bugs. Second, the biggest teams
@@ -195,9 +230,9 @@ tooling them selves. This means that you are not only on boarding them, you are
 also migrating them. This tends to add quite a bit of overhead because you can't
 just lift and shift, you have to take them on board step by step, maybe breaking
 with some conventions along the way. This often triggers even more bugs and
-corner cases. And usually these teams already have _something_ in terms of
-support tools. It might not be great, but it has worked so far, and this might
-mean that they are not particularly motivated to on board.
+corner cases. And since these teams already have _something_ in terms of
+support tools, they might not be particularly motivated to spend time on
+boarding something new.
 
 Instead I've experienced a lot more success starting with the smaller teams. They are
 usually less coupled with existing infrastructure and tend to have less tooling
@@ -205,9 +240,11 @@ available. Tooling like the platform you are offering might be something they
 could only dream about before, but now they can have it for free. If you start
 with these teams you can control the pace and your use of resources for
 on boarding much better. You can also iron out the most common problems before
-tackling the bigger more complex teams.
+tackling the bigger more complex teams. Because there will always be use cases
+and situation you had not planned for.
 
-## Don't underestimate the human psyche
+
+## Don't underestimate the human aspect
 Something that really surprised me early on was how some teams that were in dire
 need of migrating from existing unmaintained platforms or tooling were reluctant to do so.
 They seemed to agree that what we offered would help them, and they hated their
@@ -231,6 +268,9 @@ Kahneman. It casts some light on cognitive biases and how we tend to think
 either reactively and instinctively or logically and analytically depending on a
 multitude of factors. It's crucial that we can identify both ways of thinking
 and even appeal to logic when needed.
+
+</br>
+<img src="/rage.png" alt="Ragecomic" width="75%"/>
 
 ## Unified support channels
 So we've started to on board teams and everything is going great! But what is
@@ -256,7 +296,7 @@ forwarded somewhere else. This became a nightmare in terms of user experience,
 because our users weren't getting the right help.
 
 Our solution was to create a unified Help Center. It was basically just a
-confluence page with form to create a ticket in a Jira project. But it gave our
+confluence page with a form to create a ticket in a Jira project. But it gave our
 users a single point of entry. No need to guess where a ticket should be
 directed.
 The ticket followed a template asking some key questions which would give
@@ -273,11 +313,15 @@ deployments they are less likely to go look. If you have one entry point that
 fans out and lets people drill down into the metrics they are much more likely
 to use it often.
 
-## I guess that's all I have for now
-There are probably a thousand things to say about building a Delivery Platform,
+
+## I guess that's all there is to say about that
+No not really. There are probably a thousand things to say about building a Delivery Platform,
 but I think I've touched upon a few key elements at least.
 Seeing teams adopting your tools and increasing speed and confidence as a result
 is a fantastic feeling.
 Being pulled into different teams with various tech stacks helping them debug corner cases
 and oddities is extremely rewarding and you learn so much. It is the dream job
 I never knew I wanted until I suddenly had it.
+
+If you have any insights, disagreements or comments please join in on the
+discussion over at <a href="">reddit.com/devops</a> or <a href="">hackernews</a>
