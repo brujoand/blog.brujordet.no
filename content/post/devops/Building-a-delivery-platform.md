@@ -16,8 +16,10 @@ integration bus for the local municipality, and we had earned a lot of freedom w
 the client. We ran our own Hudson build server, we were early adopters of self hosted
 Github enterprise, and we deployed to production at will using a suite of in house ruby
 scripts. We had monitoring, logging and even configuration was provisioned through puppet.
-But we had never heard of DevOps. This was all thanks to a couple of very skilled people who
-pushed for this way of working, and we all really enjoyed it. It just made sense to us.
+This was all thanks to a couple of very skilled people who
+pushed for this way of working, and we all really enjoyed it. It just made sense
+to us, even though we had never heard of DevOps. T
+
 
 When I eventually moved on to new adventures I was surprised to learn that this
 was far from the norm. As a result I ended up trying to improve upon the delivery process
@@ -75,7 +77,7 @@ missing to get there.
 
 
 ## The Golden Path
-There are two typically two ways of building these platforms. Either you provide
+There are typically two ways of building these platforms. Either you provide
 tooling and services only, and let each team pick and choose how they want to
 integrate. This gives the teams a lot of freedom and autonomy, but it comes with
 a cost. The teams suddenly own a lot of glue code to make their pipelines work.
@@ -324,4 +326,6 @@ and oddities is extremely rewarding and you learn so much. It is the dream job
 I never knew I wanted until I suddenly had it.
 
 If you have any insights, disagreements or comments please join in on the
-discussion over at <a href="">reddit.com/devops</a> or <a href="">hackernews</a>
+discussion over at <a
+href="https://www.reddit.com/r/devops/comments/erz1j5/building_a_delivery_platform/">reddit.com/devops</a>
+or <a href="https://news.ycombinator.com/item?id=22110068">hackernews</a>.
