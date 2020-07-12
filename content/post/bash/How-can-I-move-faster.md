@@ -91,7 +91,7 @@ git branch.
 ```bash
 alias gcb='git co "$(git branch -a | sed "s/  //" | grep -v "^*" | fzf)"'
 ```
-<script id="asciicast-42QCJBwOswJn4Anodvc8slZgU" src="https://asciinema.org/a/42QCJBwOswJn4Anodvc8slZgU.js" async></script>
+<script id="asciicast-346970" src="https://asciinema.org/a/346970.js" async></script>
 
 There are also some bash specific settings I like to set, to be able to move
 around faster. For instance:
