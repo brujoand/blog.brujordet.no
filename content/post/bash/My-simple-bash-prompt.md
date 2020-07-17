@@ -13,12 +13,6 @@ speed, or lack there of.
 
 <a href="https://asciinema.org/a/0efgJrqQJY2vH1XguXjX3xV1c" target="_blank"><img src="https://asciinema.org/a/0efgJrqQJY2vH1XguXjX3xV1c.svg" /></a>
 
-The color scheme, and layout features are pretty alpha, but I like the idea of
-being able to change the way my prompt is styled and the active segments
-depending on things like if I'm in an SSH session, inside a Tmux pane or just on
-my laptop. Optimizing is nice.
-
-
 ## Bash and clean code
 I've always felt that a Bash prompt should be written in Bash. My reasoning has
 been that Bash is everywhere, so the prompt should not need anything else. If it
