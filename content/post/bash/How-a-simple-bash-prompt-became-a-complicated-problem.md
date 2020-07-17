@@ -182,7 +182,7 @@ execute::nohup_function() {
 ```
 
 This function will execute the command in a subshell, meaning our environment
-and functions are still available. The trap signal will catch the SIGHUB and
+and functions are still available. The trap signal will catch the SIGHUP and
 SIGINT signals and ignore them. We disconnect our forked process from stdin by
 pointing stdin to /dev/null. We point stderr and stdout to
 ´${SBP_CONFIG}/nohup.log´ and we mark this command to be executed
