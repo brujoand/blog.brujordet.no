@@ -1,5 +1,5 @@
 ---
-title: "How a Simple Bash Prompt Became a Complicated Problem"
+title: "How a Simple Bash Prompt became a complicated problem"
 date: 2020-07-17T09:42:21+02:00
 tags: ["bash", "productivity", "zsh", "1337"]
 categories: ["bash"]
