@@ -83,7 +83,8 @@ So I ended up relying on pass by reference for returning values without spawing
 a subshell. Example:
 
 ```bash
-# The function
+
+# Returning value by referencing the $1 variable
 add_numbers() {
   local -n add_numbers_result=$1
   local first_number=$2
@@ -92,11 +93,16 @@ add_numbers() {
   add_numbers_result=$(( first_number + second_number ))
 }
 
-# The usage
-local my_added_numbers
-add_numbers 'my_added_numbers' 22 33
+# Passing a variable for the return value
+print_numbers() {
+  local my_added_numbers
+  add_numbers 'my_added_numbers' 22 33
+  echo "$my_added_numbers"
+}
 
-# The variable 'my_added_numbers' now has the value '55'
+print_numbers
+
+# The output will now be: 55
 
 ```
 
