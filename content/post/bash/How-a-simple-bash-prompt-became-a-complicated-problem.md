@@ -277,7 +277,7 @@ So this was a tricky one and I started out doing something like so:
 
 ```bash
 command_start="$(HISTTIMEFORMAT='%s ' history 1 | awk '{print $2}')"
-command_end="$(date %s)"
+command_end="$(date +%s)"
 command_duration=$(( command_end - command_start ))
 ```
 
