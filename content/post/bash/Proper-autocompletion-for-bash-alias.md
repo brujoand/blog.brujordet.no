@@ -146,3 +146,8 @@ Finally we find the completion function for our original command and we then
 execute that function passing along the current and previous word to get our
 proper auto completion.
 
+Disclaimer: This is probably not how the completion features are meant to be
+used, so expect dragons.
+
+Discussion: [reddit.com/r/bash - post](https://www.reddit.com/r/bash/comments/oinauf/proper_autocompletion_for_bash_aliases/)
+
