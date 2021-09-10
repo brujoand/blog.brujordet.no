@@ -1,6 +1,8 @@
 ---
 title: "Who needs a homelab"
 date: 2021-08-22T10:13:22+02:00
+tags: ["homelab", "kubernetes"]
+categories: ["homelab"]
 draft: false
 ---
 
