@@ -109,5 +109,3 @@ nice.
 ```
 
 I had a lot of fun with this, you should try it too! :D
-
-[Discussion on Reddit](https://www.reddit.com/r/homeautomation/comments/plgl4p/sniffing_water_out_of_thin_air_4m_writeup_water/)
