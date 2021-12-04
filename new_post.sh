@@ -18,5 +18,7 @@ if [[ ! -d "./content/$post_dir" ]]; then
   exit 1 # TODO implement
 fi
 
+post_path="post/${category}/${post_name// /_}.md"
 
-hugo new "post/${category}/${post_name}.md"
+
+hugo new "$post_path"
