@@ -1,5 +1,5 @@
 ---
-title: "Replacing my doorbell with a video camera"
+title: "Replacing my doorbell with a security camera"
 date: 2021-09-17T10:12:01+02:00
 tags: ["homelab", "iot", "ai"]
 categories: ["homelab"]
@@ -9,7 +9,7 @@ draft: false
 So my door bell ran out of
 battery, and I started wondering if I could use my security camera instead. In
 retrospect I could have gotten some batteries from the battery drawer, but
-wheres the fun in that!?
+where is the fun in that!?
 
 So a while back I bought a bunch of Hikvision and Reolink Power over Ethernet (PoE)
 4K security cameras. I like them because they only need one wire and have great
@@ -17,26 +17,8 @@ quality builds for the price. I don't trust them at all though, so they are
 almost completely sealed of from both my network and the internet using a VLAN.
 Only my kubernetes cluster can reach them, and nobody else.
 
-When I initially set these cameras up I tested a
-lot of different tools to capture and save video. In no particular order these
-were my findings:
-
-  - Blue Iris
-    - Seems to be good software
-    - lots of features, even object detection
-    - But it requires a standalone Windows box, which I don't want to run
-  - Zoneminder
-    - Seems like decent software
-    - Again full of features, but often plugin based
-    - Felt a bit clunky to both run and configure
-    - Very active community
-    - But this is also a monolith and doesn't fit well in my kubernetes cluster
-  - MotionEye:
-    - Frontend for 'Motion'
-    - Nice and small compared to the others
-    - I almost went for this one
-
-There were a huge number of other options, many free, some with restrictions and
+When I initially set these cameras up I looked for a tool to capture and save video.
+There were a huge number of options, many free, some with usage restrictions and
 even more paid solutions. But what I did notice was that they were all pretty
 much doing the same thing. Transcoding using GPU, some type of motion
 dectection, and many of them where now starting to do object detection using the
@@ -168,6 +150,8 @@ can know if it's my wife that have just arrived or if it's the pizza delivery
 guy. Both are great, but one has pizza!
 
 Unfortunately that is a risky landscape with regards to privacy so it might
-be hard to get right. If you have a camera lying around I really recommend you give this
+be hard to get right.
+
+If you have a camera lying around I really recommend you give Frigate
 a try, as you can even get the object detection without the Coral, at the
 cost of higher CPU usage.
