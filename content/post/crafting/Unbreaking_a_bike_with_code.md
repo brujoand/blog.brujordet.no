@@ -11,14 +11,14 @@ a 3D printer as a birthday gift to myself. And it's been a
 blast! I've printed everything I've gotten my hands on, but I have had this nagging
 feeling that I was just replicating, I wasn't creating.
 
-One (un)lucky day day though, my son broke the chain guard on is bike. I jumped
-on the chance to prove myself and took some quick notes and then took a photo of
-it because paper always magically disappears for me.
+One (un)lucky day though, my son broke the chain guard on is bike. I jumped
+on the chance to prove myself and took some quick notes and measurements. (Then
+I took a photo of it because paper always magically disappears for me.)
 
 <img src="/guard_chain_sketch.jpg" alt="My notes" width="100%"/>
 
 With all the measurements ready I started researching CAD (computer-aided design) tools, to figure out
-which one would be easiest to use. As it turned out, I hated all of them. They
+which one would be best to use for this. As it turned out, I hated all of them. They
 all look pretty slick and have a gazillion features, but the learning curve was
 steep and there was so much lingo I didn't understand. I've never really liked
 graphical tools anyway to be honest. The mouse is cumbersome to use and the menus are always a nightmare
@@ -50,7 +50,7 @@ module.exports = { main }
 So I'm creating a cylinder with my specified radius and height, and I'm defining
 the center position of the object to be x=0 and y=0, so in the center. But I'm
 putting it up half it's height in the z axis, so the model will lay on z height
-0. This makes it easier to plate things in relation to eachother.
+0. This makes it easier to place things in relation to eachother later.
 The segments parameter defines how many straight segments should be used to
 make up the circle. With segments set to 5, we would get a pentagon, with 64
 instead we get a fairly smooth circle.
@@ -69,7 +69,8 @@ function generateMainCircle() {
     radius: mainCircleRadius,
     height: mainCircleThickness,
     center: [0,0,mainCircleThickness/2],
-    segments: 64})
+    segments: 64
+  })
   const mainCircleInner = cylinder({
     radius: mainCircleRadius - mainCircleWidth,
     height: mainCircleThickness,
@@ -88,7 +89,7 @@ and then I simply subtracted the small one from the big one. Behold the hole!
 <img src="/chain_guard_circle.png" alt="I made a circle" width="100%"/>
 
 Next I created yet another circle and attached it to the first to make an L shaped rim.
-Basically this thing is what creates the guard which keeps the chain in place.
+Basically this L thing is what keeps the chain in place.
 
 
 ```javascript
@@ -126,8 +127,8 @@ function main (){
 
 <img src="/chain_guard_rim.png" alt="Now with a rim" width="100%"/>
 
-So now there is a rim, but this thing needs to be attached to the cog of
-the chain somehow. Enter the tooth, and it's "tooth hole". I seriously had no
+Now there is a rim, but this thing needs to be attached to the cog of
+the chain somehow. Enter the tooth, and it's "nut hole". I seriously had no
 idea what to call this, but you get the point I hope.
 
 
@@ -186,7 +187,7 @@ function main (){
 }
 ```
 
-<img src="/chain_guard_single_tooth.png" alt="I made a tooth" width="100%"/>
+<img src="/chain_guard_single_tooth.png" alt="I made a single tooth" width="100%"/>
 
 This basically just adds another function which generates a "toothCircle" where
 we place the "nut hole" or screw hole I guess would be a better name and the
@@ -223,14 +224,16 @@ function main (){
 <img src="/chain_guard_complete.png" alt="And it's done!" width="100%"/>
 
 The for loop rotates our chain guard and adds another tooth for each iteration,
-until we finally have all 5 of them.
+until we finally have all 5 of them. Well technically it it adds an entire
+single tooth chain guard, but since the main body of the chain guard overlaps
+between the two models, only an extra tooth is effectively added.
 
 Now it's just a matter of preparing the model for my printer, and fire it up!
 
 <img src="/guard_chain_printing.jpg" alt="Look at it go!" width="100%"/>
 
 Once it was done I printed another one for the backside and I could finally
-attach it. Or at least I'm in the process of doing that here.
+attach it. Or at least I'm in the process of doing that in the below photo.
 
 <img src="/guard_chain_complete.jpg" alt="Shiny!" width="100%"/>
 
@@ -240,3 +243,10 @@ JavaScript code in all it's beauty
 and Github also supports viewing STLs in the browser so you could also play with
 the finished model over
 [here](https://github.com/brujoand/XYZ-models/blob/master/bicycle_chain_guard/bicycle_chain_guard.stl)
+
+I'll probably make an updated version of this model though to add hexagonal
+"nutClearingHoles" on the side where I attached the bolts. This way the bolts
+will stick without me having to hold them in place while screwing in the screws.
+Another thing is that I printed this in PLA which is quite brittle, and a next
+print will probably be done in PETG which is much tougher.
+And finally, I'll want to add some luminescent or reflective markings or letters for dramatic effect :D
