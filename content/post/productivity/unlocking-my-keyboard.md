@@ -46,7 +46,7 @@ Note that the udevmon location might vary depending on how you installed it.
 Then we should define the referenced `/etc/udevmon.yaml`
 
 ```bash
-- JOB: "intercept -g `DEVNODE | dual-function-keys -c /etc/builtin-keyboard-modifications.yaml | uinput -d `DEVNODE"
+- JOB: "intercept -g $DEVNODE | dual-function-keys -c /etc/builtin-keyboard-modifications.yaml | uinput -d $DEVNODE"
   DEVICE:
     NAME: "Apple Inc. Apple Internal Keyboard / Trackpad"
     EVENTS:
