@@ -2,6 +2,7 @@
 title: "I can't believe it's not dns"
 date: 2023-05-09T08:46:57+02:00
 tags: ["devops", "kubernetes", "dns"]
+categories: ["devops"]
 draft: false
 ---
 
