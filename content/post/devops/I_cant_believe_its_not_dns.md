@@ -16,18 +16,16 @@ My homelab cluster is deployed using
 coordinating a myriad of [Ansible](https://www.ansible.com/) scripts.
 It's not the quickest solution, but it's solid and
 customizable. These upgrades are usually quite uneventful, but I wanted to make
-some larger changes to how my gitops flow works, so I decided to just wipe
+some larger changes to my gitops flow, so I decided to just wipe
 everything after backing up all my volumes and start from scratch.
-
 
 ## Well, that's odd
 I use [Flux](https://github.com/Fluxcd/flux2) to deploy my workloads into
-kubernetes. It's quite frankly dead simple. I add yaml to git, Flux reads yaml
+kubernetes. It's dead simple. I add yaml to git, Flux reads yaml
 and adds stuff to Kubernetes. But when I bootstrapped Flux into my freshly
 installed cluster. Nothing worked. Errors everywhere.
 
-It was quite clear from the logs that Flux couldn't do name resolution. Flux
-starts out by fetching all the helm repositories it needs to deploy the helm
+Flux starts out by fetching all the helm repositories it needs to deploy the helm
 charts I've created nice little yaml files for in my git repo. But it couldn't
 resolve a single domain name, so now it was stuck.
 
@@ -42,12 +40,9 @@ traffic among the two pods (10.133.0.3 in my case). LocalDNS is then deployed as
 a daemonset with one pod per node and binding on the private ip 169.254.25.10.
 
 So the pods I deploy using Flux don't use CoreDNS directly instead they query
-LocalDNS which in turn queries CoreDNS, which again queries either an external
-DNS or the Kubernetes API to resolve the request.
-
+LocalDNS. Quite nifty.
 
 ## The detour
-
 When I started digging into logs, it became clear that the CoreDNS pods
 were doing fine, but the LocalDNS pods were struggling massively.
 
@@ -102,8 +97,7 @@ against the CoreDNS service.
 
 
 ## It's all so confusing
-The hardest part about this problem was the inconsistency. My initial
-deployment with Flux failed hard. So I tried resetting and recreating the
+My initial deployment with Flux failed hard. So I tried resetting and recreating the
 cluster multiple times. And finally I gave up and went to bed. The next morning
 though things had happened. Some pods had been created, some of them were
 even running but others were crashing. All errors were related to DNS not working.
@@ -114,11 +108,8 @@ are by default configured to use TCP when querying CoreDNS, while `dig`
 which I was using to test prefers UDP. And sure enough, when I added the `+tcp`
 flag to my dig commands, forcing it to use TCP, the queries were all failing with a timeout. But why?
 
-Another confusing aspect of this was that the cluster was slowly
-moving into a working state with all my deployments becoming healthy, even though
-the LocalDNS pods war spewing out errors. After
-adding a CoreDNS dashboard I saw that the LocalDNS pods will eventually try
-UDP if TCP keeps failing. So now and then they will manage to get a response
+After adding a CoreDNS dashboard to Grafana I saw that the LocalDNS pods would eventually try
+UDP if TCP kept failing. So now and then they would manage to get a response
 from CoreDNS over UDP and cache that response for dear life. I tried to reconfigure the LocalDNS to
 use UDP instead, thinking this would surely mitigate the issue. But now all UDP
 queries were met with a timeout too. (╯°□°)╯︵ ┻━┻
@@ -128,7 +119,7 @@ At this point I was basically questioning my own competence and will to breathe.
 I had spent days reading, thinking and creating slack
 threads in various public channels. I even created an issue on the CoreDNS Github page
 asking for guidance.
-The discussions on that issue did steer me in the right direction thought as we
+The discussions on that issue did steer me in the right direction though. We
 were able to verify that CoreDNS and the LocalDNS pods were configured properly.
 This problem had to be related to network and likely related to the CNI, or hardware, or both.
 
@@ -155,10 +146,42 @@ to disable hardware offloading of checksums on the calico interface.
 sudo ethtool --offload vxlan.calico rx off tx off
 ```
 And voila the DNS issues disappeared completely!! I was ecstatic and the world finally
-made sense again. With a new found bounce in my step I
-was eager to share the details at work, since I remembered that our Infra team
+made sense again. I was eager to share the details at work, since our Infra team
 had struggled with a similar DNS issue in one of our clusters. Luckily it was
 the exact same issue, so don't tell my that running a highly available
 Kubernetes cluster in your basement is a waste of time!
 
-So this time, it was actually not really DNS.
+## What actually happened?
+From what I could gather after asking some questions on the Calico slack channel
+this is what happened:
+  - A LocalDNS pod calls out to the CoreDNS service
+  - The service IP rewrites the packet destination to match a CoreDNS pod
+  - The node routing will cause the packet to traverse the calico interface
+  - Kernel vxlan encapsulation code executes, which is where the checksum bug lives
+  - Checksum mismatch -> ERROR -> Retransmission
+
+So it seems that the reason this worked a few times, and the cluster got to a
+healthy ish state, was not actually related to UDP vs TCP. But rather when the LocalDNS and CoreDNS were on the same node, the packet could get routed without traversing the calico interface, and
+avoided the kernel vxlan encapsulation. Eventually all healthy pods were on the
+same nodes as the CoreDNS pods.
+
+Finally our Kubernetes powered Minecraft server is back up! :D
+
+
+## PS: Further reading
+If you want to dig deeper into this, I've listed some interesting links as to
+how this all happened. From my understand there was initially a kernel bug in
+the code that handles vxlan encapsulation. In anticipation of a fix most CNIs
+created workarounds which solved the problem for their users. Later the kernel
+bug was patched, and some of the CNI workarounds were removed. However at some
+point the kernel bug reappeared leaving some of the CNIs vulnerable to the bug
+yet again.
+
+- [Bug reported to Calico in 2020](https://github.com/projectcalico/calico/issues/3795)
+- [Bug reported to Kubernetes 2020](https://github.com/kubernetes/kubernetes/issues/98758)
+- [Bug reported to Flannel 2020](https://github.com/flannel-io/flannel/issues/1279)
+- [Bug re-reported after it returned 2022](https://github.com/projectcalico/calico/pull/6842)
+- [Same bug reported to kubespray 2022](https://github.com/kubernetes-sigs/kubespray/issues/8992)
+
+I didn't find any reference to the actual kernel bug though which would have
+been interesting to see.
