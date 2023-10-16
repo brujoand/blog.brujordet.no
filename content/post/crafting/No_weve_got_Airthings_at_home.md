@@ -14,18 +14,16 @@ I had a conversation with my wife about ventilation that went something like thi
 
 I have a soft spot for buying sensors and gadgets at night
 when I'm supposed to go to sleep. Always thinking that "Oh, this could be a cool
-addition If I ever do that project idea". This summer though I finally pulled
-the trigger on my sensor adventure and created a cute little water temperature
-sensor for our above ground pool. I had not really been looking forward to the
-initial learning curve, which is probably why I've put this off for so long, but
-I was in for a surprise. I found [ESPHome](https://esphome.io/) which is an amazing
+addition If I ever do that project idea". I love the idea of
+making IOT devices myself as they are often cheaper and much better at privacy
+and security as there is no cloud exposure. I was however a bit reluctant to
+embark and what I expected to be a steep learning curve, but I was in for a surprise.
+I found [ESPHome](https://esphome.io/) which is an amazing
 platform for building IoT devices, and it has support for pretty much all the
-sensors and micro controllers I have stashed away.
-
-After building the water sensor, an air sensor felt like it would be a
-breeze. And it actually was, no dramatic effect here, just a simple sunshine
-story. I know, anti-climatic but sometimes we have to treasure the wins! :D
-(I'll post the horror story of my cat flap project when I build up the courage)
+sensors and micro controllers I have stashed away. So the process was actually
+very straight forward! I know it's more fun to read about failures and
+frustrations, but I'm preparing my adventure with a smart cat flap for that.
+Sometimes we have to treasure the wins! :D
 
 ## The Parts
 
@@ -234,6 +232,11 @@ I made one mistake with the design above though, which I had to fix after
 assembling everything. The orange wire going from 13S to 13F should have gone
 all the way to 13D. But fortunately it wasn't a big deal to change.
 
+The tricky part here was that the Particle and CO2 sensor both required 5v while
+the Temp sensor wanted 3.3v. So everyone got 5v directly from the power supply,
+while the temp sensor got it's 3.3v from the power output on the micro
+controller. The important part is that everyone shares the same ground!
+
 <img src="/airmon_complete.png" alt="Airmon finally completed" width="100%"/>
 
 With all the components soldered in place and a 5v power supply added, we're
@@ -270,5 +273,5 @@ Also; I actually wanted to add a Radon sensor on the basement device, but those 
 crazy expensive at around $300. So compared to the $140 I spent on parts for these two
 devices in total it was just not worth it to add the Radon sensor.
 Later I'm hoping to design some 3d printed ventilation duct's with HEPA filters so
-I can use the CO2 and particle information to actually improve the ventialation.
+I can use the CO2 and particle information to actually improve the ventilation.
 But you know, these things take time :P
