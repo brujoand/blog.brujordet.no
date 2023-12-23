@@ -1,24 +1,35 @@
 #!/usr/bin/env bash
 
-post_base_dir="post"
+function get_current_categories {
+  (cd content/post/ && echo * | tr ' ' '\n')
+}
 
-category=$1
-shift
-post_name="${*}"
+function get_current_tags {
+  (cd content/post/ && sed -En 's/.*tags: \[(.*)\]/\1/p' ./*/*.md) | tr -cd '[:alnum:][:space:]' | tr ' ' '\n' | sort -u
+}
 
-if [[ -z "$post_name" ]]; then
-  echo "usage: ./$0 <category> <post post_name>"
-  exit 1
-fi
+category=$(get_current_categories | fzf --bind enter:accept-non-empty)
+[[ -z "$category" ]] && exit 1
+tags_list=("$(get_current_tags | fzf -m --bind enter:accept-non-empty)")
+tags=$(printf '"%s", ' "${tags_list[@]}")
+[[ "${#tags[@]}" -eq 0 ]] && exit 1
 
-post_dir="${post_base_dir}/${category}"
+read -r -p "Enter title: " title
 
-if [[ ! -d "./content/$post_dir" ]]; then
-  echo "${post_dir} does not exist, should we create it?"
-  exit 1 # TODO implement
-fi
+[[ -z "$title" ]] && exit 1
 
-post_path="post/${category}/${post_name// /_}.md"
+timestamp=$(date +"%Y-%m-%dT%H:%M:%S%:z")
 
+post_path="content/post/${category}/${title// /_}.md"
 
-hugo new "$post_path"
+cat <<EOF > "$post_path"
+---
+title: "${title}"
+date: ${timestamp}
+tags: [${tags%?}]
+categories: ["${category}"]
+draft: true
+---
+EOF
+
+"$EDITOR" "$post_path"
