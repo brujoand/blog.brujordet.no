@@ -7,7 +7,8 @@ draft: false
 ---
 
 Many engineers have a strained relationship with Bash. I love it though, but I'm
-very aware of it's limitations.
+very aware of it's limitations when it comes to error handling and
+data structures (or lack thereof).
 
 As a result of these limitations I often see Bash scripts written very defensively
 that define something like:
