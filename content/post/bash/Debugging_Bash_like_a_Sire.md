@@ -158,7 +158,7 @@ function log::error {
 </br>
 For the `log::error` function I've made some adjustments. It prints the log
 line, just like `log::info`, but we also loop through every item in
-`${!FUNCKNAME[@]}` as `stack_id`. The exclamation mark in front of an array
+`${!FUNCNAME[@]}` as `stack_id`. The exclamation mark in front of an array
 expansion gives us the indexes instead of the value so now we can iterate over
 both the `BASH_SOURCE` and `FUNCNAME` arrays as they should have the same length.
 We print one line for each `stack_id` and we also grab the value from a new
