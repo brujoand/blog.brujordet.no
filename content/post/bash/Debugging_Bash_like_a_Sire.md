@@ -26,10 +26,15 @@ These are bash builtin options that do more or less sensible things.
 
 All of these are quite useful, thought I tend to skip the `-u` flag as bash
 scripts often interact with global variables that are set outside my scripts.
-And the `-x` flag is extremely noisy so it's most often used manually when
-debugging.
+The `-x` flag is extremely noisy so it's most often used manually when
+debugging. And to be honest, I don't really use `-o pipefail` either.
+I guess this is a good place for a few words of caution when it comes to this
+approach. Feel free to dig into [this reddit
+comment](https://www.reddit.com/r/commandline/comments/g1vsxk/comment/fniifmk/),
+but to summarize, the behavior of these flags aren't consistent across Bash
+versions and they can break your scripts in unexpected ways.
 
-The shortcoming with these flags however is that they don't necessarily tell
+For the current context though the shortcoming with these flags is that they don't necessarily tell
 you *where* the problem is, and sometimes not even *what* the problem is.
 Because of this I very often recreate the following functions when I interact
 with larger code bases:
