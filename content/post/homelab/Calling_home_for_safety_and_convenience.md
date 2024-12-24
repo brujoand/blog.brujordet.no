@@ -6,7 +6,7 @@ categories: ["homelab"]
 draft: false
 ---
 
-It's the morning of x-mas eve, the kid's are plowing through big red socks
+It's the morning of x-mas eve, the kids are plowing through big red socks
 filled with candy, and I'm tucked away with my laptop and thought I'd share one
 of my more long term homelab wins. The remote access of my homelab, especially
 down to the individual servers.
@@ -36,13 +36,13 @@ To safely connect home I could have setup OpenVPN, but I much prefer Wireguard.
 It's faster, has a lower footprint and it runs over UDP. If someone decides
 to scan my network, they would easily find the OpenVPN port, but wireguard won't
 reply unless you have a secret key. It's not going to save you from a
-skilled adversary, but you are at least less visible to the public.
+skilled adversary, but you are at least less visible on the public Internet.
 My OPNsense router has built in support for Wireguard and even a UI for
 generating client configurations. Naturally I use this on my laptop to call
 home and manage stuff, but I also use it on my own and my families smart phones.
-The instance any of our phones leave the home wifi they will connect home through Wireguard.
+The second any of our phones leave the home wifi they will connect home through Wireguard.
 Meaning all our traffic is still coming home encrypted, and we can still access all our
-services. Maybe most importantly we still have DNS blocking of advertisement and
+services. Maybe most importantly we still have DNS blocking of ads and
 malware and we can also quite safely connect to public/unencrypted wifi without
 much worry.
 
@@ -72,7 +72,7 @@ remotely from the comfort of your own bed. Finally I could remotely manage one m
 
 Thankfully, this can be solved with an old school KVM switch. The [PiKVM documentation](https://docs.pikvm.org/tesmart/#setting-the-ip-address-of-the-tesmart-switch)
 makes a few recommendations for switches that are compatible with PiKVM, so I
-went with the 8 port TESmart one which was one sale at the time and slot's
+went with the 8 port TESmart one which was on sale at the time and slots
 nicely into my 19" network rack. Right below my custom rack mounted raspberry
 pis.
 
@@ -89,7 +89,7 @@ servers and a nice little terminal window pops up with all the output I could
 want. I can interact with the server as if I was directly connected, and even
 enter the BIOS to make all those secret tweaks and hacks or break things.
 Funnily enough, on the screenshot below the time formatting on the log output is
-broken for some reason. This is just the dashboard for one of my Talos nodes, which is
+broken for some reason. This is the dashboard for one of my Talos nodes, which is
 showing dmesg output. For some reason it thinks we are just above [Unix
 Time](https://en.wikipedia.org/wiki/Unix_time) but the machine has the correct
 time so the dashboard is just having a bad day I guess.
