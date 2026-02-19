@@ -1,0 +1,7 @@
+[tools]
+hugo-extended = "0.140.1"
+gitleaks = "latest"
+shellcheck = "latest"
+
+[tools."pipx:pre-commit"]
+version = "latest"

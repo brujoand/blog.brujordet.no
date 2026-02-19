@@ -1,0 +1,44 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        types: [markdown, toml]
+      - id: end-of-file-fixer
+        types: [markdown, toml]
+      - id: check-added-large-files
+        args: ['--maxkb=2048']
+      - id: check-merge-conflict
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.22.1
+    hooks:
+      - id: gitleaks
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.10.0.1
+    hooks:
+      - id: shellcheck
+        files: \.(sh)$
+        exclude: ^themes/
+
+  - repo: local
+    hooks:
+      - id: hugo-build-check
+        name: Hugo build check
+        language: script
+        entry: hooks/hugo-build-check.sh
+        pass_filenames: false
+        types_or: [markdown, toml]
+
+      - id: frontmatter-lint
+        name: Front matter lint
+        language: script
+        entry: hooks/frontmatter-lint.sh
+        types: [markdown]
+
+      - id: static-asset-check
+        name: Static asset reference check
+        language: script
+        entry: hooks/static-asset-check.sh
+        types: [markdown]
