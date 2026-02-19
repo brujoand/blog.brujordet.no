@@ -3,8 +3,6 @@ languageCode = "en-us"
 title = "Automate attention"
 author = "Anders Brujordet"
 theme = "m10c"
-PygmentsCodeFences = true
-
 [outputs]
   page = ["HTML"]
   home = ["HTML", "RSS"]
@@ -26,6 +24,8 @@ PygmentsCodeFences = true
     url = "https://www.github.com/brujoand"
 
 [markup]
+  [markup.highlight]
+    codeFences = true
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
