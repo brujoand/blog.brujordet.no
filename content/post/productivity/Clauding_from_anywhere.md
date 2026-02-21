@@ -43,17 +43,22 @@ My laptop at work isn't mine, it belongs to the company I work for, and I keep a
 working from home. But sometimes, it would be nice to securely open a tunnel home
 to fix something, like a short chat with Claude just have it set up a new service.
 As I've talked about [earlier](https://blog.brujordet.no/post/homelab/calling_home_for_safety_and_convenience/) I have my own setup to access my home services securely from wherever I am.
-But for that to work I would have to have a Wireguard config, and an ssh
-keypair available. I don't want to keep those on my work laptop, and I don't want to
-install or configure anything there for home use. So I encrypted these three items, threw
+But for that to work I would have to have a Wireguard config (VPN config), and an ssh
+keypair available (Keys to connect home using ssh).
+I don't want to keep those on my work laptop, and I don't want to
+install or configure anything there for home use. So I encrypted these items, threw
 them onto a tiny usb drive along with a Dockerfile that installs ssh and Wireguard,
 and finally I added a bash script to throw it all together. So now I can
-plug that into my work laptop, execute the script, enter my decryption password
-and it automatically uses ssh to connect home through the Wireguard all happening within a docker container.
-To make this approach more useful though I started running Claude Code in a Tmux session so I
-could keep going exactly where I left off earlier. The script now automatically
-attaches to the running tmux session, but still this required me to always have
-a laptop available for interactive work.
+plug that into my work laptop, execute the included script, enter my decryption password
+and it automatically uses ssh to connect home through the Wireguard tunnel.
+All of this then is happening within a docker container.
+Plug usb in -> Talk to Claude at home.
+
+To make this approach more useful though I started running Claude Code in a Tmux session so I could keep going exactly where I left off earlier.
+(Tmux basically keeps my claude conversations running even when I close the connection to my home, you could use 'Screen' instead)
+
+The script now automatically attaches to the running tmux session, but still this required me to always have
+a laptop available for interactive work, and that's not always the case.
 
 ## The mobile stage
 [Prompt](https://apps.apple.com/us/app/prompt-3/id1594420480) is an iOS ssh
@@ -104,15 +109,14 @@ effort.
 
 
 ## The Pebble
-Around 12 years ago I found the coolest smart watch ever, The Pebble.
+Around 12 years ago I found a really cool smartwatch, The Pebble.
 <img src="/pebble_watch_trio.png" alt="The original Pebble watch" width="75%"/>
-This thing was great and it was open, so I could write my own watchface for it
-in C.
+This thing was open so I could write my own watchface for it in C.
 My watchface wasn't anything amazing, just a Norwegian version of a watchface that showed
 the time using natural language. So "05:05" became "5 past 5". After a few
 nights hacking away at the code, it worked and I uploaded it to this pebble
-'appstore'. Source code was published over at [github](https://github.com/brujoand/nortid/). It had only a handful of users
-but to me this was an amazing thing. And with 'all these users' entrusting me with telling them what time it was,
+'appstore'. It had only a handful of users but to me this was an amazing thing.
+And with 'all these users' entrusting me with telling them what time it was,
 I had no choice when the version 2 of the SDK dropped. I had to upgrade at once!
 This did take some time though, days in fact. But eventually I got there, and
 all was well.
