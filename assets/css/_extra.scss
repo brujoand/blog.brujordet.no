@@ -5,3 +5,15 @@
     list-style-type: none;
   }
 }
+
+blockquote {
+  border-left: 4px solid #57cc8a;
+  background-color: #353b43;
+  margin: 1.5em 0;
+  padding: 0.75em 1.25em;
+  color: #afbac4;
+
+  p {
+    margin: 0;
+  }
+}

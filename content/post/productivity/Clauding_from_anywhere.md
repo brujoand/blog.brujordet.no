@@ -17,64 +17,67 @@ but I still think (or hope) it is informative for a good amount of people.
 Anyway; I have been clawing at AI in many forms in my homelab for a while without ever being any
 type of expert. It's been usefulish, so I've used it ish. Like for object
 detection or bird song recognition.
-For me this changed drastically when I started using Claude.
+For me this changed drastically when I started using Claude. And specifically
+what I mean when I say Claude is the Claude code command interface, with the
+Anthropic Sonnet and Opus models.
 I'm going to gloss over what I'm using it for right now, and instead focus on how I'm keeping my
 conversations going while on the run. Because my Claude lives at home, in the basement, in my homelab.
 But I have to move around.
 
-Initially I spun up Claude whenever I needed to do something, but this became
+Initially I spun up the Claude code terminal app whenever I needed to do something, but this became
 limiting quite quickly.
 
-# The Githubification
-For my homelab I'm using Github, so naturally I setup the Claude github
+## The Githubification
+For the rest of my homelab I'm using Github, so naturally I setup the native Claude github
 integration so I could use Claude while not at my laptop.
-I quickly disabled the default action that Claude installs, because I don't
-need Claude to review my MRs. Instead I wrote my own action that took any Github
-Issue with a Claude tag on it, and had Claude reply or implement the Issue. This
-works well for many things, but it's not optimal because the model's context is
-very limited and the interaction is asynchronous. I still use this approach for
-long running issues or research issues where I continuously update or have Claude
-update the ticket by adding new comments. I need something more like the Claude
-CLI everywhere.
+I quickly disabled the default Github Action that the Claude integration installs, because I don't
+need Claude to review my Pull Requests. Instead I wrote my own action that took any Github
+Issue (or Pull Request) with a Claude tag on it, and had Claude reply, review or implement the Issue. This
+works well for many things. One major drawback is that the model's context is
+limited to whatever is in the Issue at hand, and the interaction is asynchronous.
+I still use this approach for long running issues or research issues where I continuously update or have Claude
+update the ticket by adding new comments. But I wanted something like the Claude Code, but accessible from anywhere.
 
-# The work laptop
-My laptop at work isn't mine, it belongs to the work, and I keep a strict separation there even when
+## The work laptop
+My laptop at work isn't mine, it belongs to the company I work for, and I keep a strict separation there even when
 working from home. But sometimes, it would be nice to securely open a tunnel home
 to fix something, like a short chat with Claude just have it set up a new service.
 As I've talked about [earlier](https://blog.brujordet.no/post/homelab/calling_home_for_safety_and_convenience/) I have my own setup to access my home services securely from wherever I am.
 But for that to work I would have to have a Wireguard config, and an ssh
 keypair available. I don't want to keep those on my work laptop, and I don't want to
 install or configure anything there for home use. So I encrypted these three items, threw
-them onto a tiny usb along with a Dockerfile that installs ssh and Wireguard,
+them onto a tiny usb drive along with a Dockerfile that installs ssh and Wireguard,
 and finally I added a bash script to throw it all together. So now I can
 plug that into my work laptop, execute the script, enter my decryption password
-and it automatically uses ssh to connect home through the Wireguard tunnel using the docker container.
-To make this approach more useful though I started running Claude in a Tmux session so I
+and it automatically uses ssh to connect home through the Wireguard all happening within a docker container.
+To make this approach more useful though I started running Claude Code in a Tmux session so I
 could keep going exactly where I left off earlier. The script now automatically
-attaches to the running tmux session, but still this wasn't quite enough.
+attaches to the running tmux session, but still this required me to always have
+a laptop available for interactive work.
 
-# The mobile stage
-I remembered my old trusted [Prompt](https://apps.apple.com/us/app/prompt-3/id1594420480) app which
-I have kept around for those times I have to connect home and run a command or
+## The mobile stage
+[Prompt](https://apps.apple.com/us/app/prompt-3/id1594420480) is an iOS ssh
+client I have kept around for those times I needed to connect home and run a command or
 two in an emergency.
 Since I already have Wireguard on my phone, the Prompt app allows me to ssh home
-and continue where I left off. Keep in mind, this is functionality I have had
-for a decade, but it has always been just barely useful for very specific fixes.
+and continue where I left off in my conversation with Claude Code.
+Keep in mind, this is functionality I have had for a decade, but it has always
+been just barely useful for very specific fixes.
 Because running VI (or nvim) through ssh on a phone app isn't great.
-
 Starting (or continuing) a conversation with a Claude however works really well,
 because all I need is to write instructions, read its suggestions and choose yes
 or no.
 
-# The approach
+## The gist of it
 Basically I walk around with my phone in my pocket, and when an idea hits I
 open a Github issue and ask Claude to research how to proceed. From a laptop or
-my phone I continue the conversation in a Claude session and tell Claude to
+my phone I continue the conversation interactively in a Claude session and tell Claude to
 fetch the background information from the Github Issue.
-So I have two tiers of interaction here depending on where I am in the process.
+
+I basically have two tiers of interaction here depending on where I am in the process.
 This might almost sound trivial, so let me give you two examples to illustrate the value I get from all of this.
 
-# The assistant
+## The assistant
 I run a set of Minecraft servers for the family. It's quite simple, you log in to
 the one that is public (the lobby), and it lets you teleport to any of the other servers.
 One is in Creative mode, one is in Survival mode and a couple are specifically themed.
@@ -85,10 +88,13 @@ were playing Minecraft, and were attacked by a creeper (an enemy that explodes).
 The creeper exploded right next to their sibling's house, destroying much of the
 house in the process. The owner of the house was
 still in school, so this was a major catastrophe that could potentially be
-salvaged. I hopped on Claude remotely who looked at my Minecraft Kubernetes
-deployment and determined that I have an anti griefing plugin installed. This
-should allow us to roll back the changes that happened around the area where the
-kid was attacked. Problem solved. It took less than 1 minute.
+salvaged. I hopped on Claude Code remotely, who looked at my Minecraft Kubernetes
+deployment and determined that I have an anti griefing plugin installed. (I've
+allowed Claude to use most of the commands needed to read the state of my
+cluster and the configuration here. It only needed my approval to attach to the
+server and execute the anti griefing commands)
+This allowed us to roll back the changes that happened around the area where the
+kid was attacked. Problem solved, and house restored. It took less than 1 minute.
 
 I knew this was possible because I had done something similar before, but there
 are so many tedious steps to fixing this that doing it remotely would not have
@@ -97,7 +103,7 @@ documentation, logging into the server and making the change, pretty huge
 effort.
 
 
-# The Pebble
+## The Pebble
 Around 12 years ago I found the coolest smart watch ever, The Pebble.
 <img src="/pebble_watch_trio.png" alt="The original Pebble watch" width="75%"/>
 This thing was great and it was open, so I could write my own watchface for it
@@ -135,23 +141,3 @@ is guiding what is happening, but I don't have to dedicate my time to the work.
 I don't have to press the keys at break neck speeds on my split mechanical
 keyboard. I can just Claude from anywhere, and to me that is such a huge
 enabler.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
