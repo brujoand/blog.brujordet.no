@@ -72,8 +72,8 @@ I had a Slack plugin to fetch conversations, so I had Claude add a sync
 option to sync an entire channel to my newly created SAFe folder on my laptop.
 The same was true for Confluence, so we added sync there also so the docs were
 in my SAFe folder. Finally came the Outlook365 plugin that synced meeting
-transcriptions; for this one I made it so I can add regular expressions like "PI
-Planning.*" or "SAFE.*" and it synced the transcripts for the meetings whose
+transcriptions; for this one I made it so I can add regular expressions like `PI
+Planning.*` or `SAFE.*` and it synced the transcripts for the meetings whose
 title matched that expression.
 In this folder I also added a CLAUDE.md file which tells Claude what this folder
 contains, some links to SAFe resources like what it is and how it's designed, and finally
