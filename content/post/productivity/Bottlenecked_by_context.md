@@ -20,7 +20,7 @@ There is also some agreement for adding vacation days,
 and previously an Excel sheet has been used to calculate this where data is
 fetched from various sources.
 
-I started out with Claude Code having it just fetch the on-call schedule from
+I started out with Claude Code having it write a script to fetch the on-call schedule from
 OpsGenie and the logged hours from Jira. This was enough for me to fill in the
 spreadsheet the first month. Before the next month's report I added support for
 fetching salaries and generating the full spreadsheet.
@@ -38,16 +38,12 @@ to fetch some data, we ended up adding it to a personal library of sorts. It was
 written in Python and relied on existing libraries where available, or just plain
 APIs in other cases.
 
-Now that I had these scripts available I could instruct Claude on how to use
-them for me. Most LLMs support this concept in some form and you can read more
-about Claude's implementation [here](https://code.claude.com/docs/en/skills) but
-basically a skill is a short text snippet that tells Claude how to do something.
-For instance I could create a skill 'briefing' which would allow me to execute
-'/briefing' in Claude code to trigger this skill. This skill would tell Claude
-to run some of our scripts that output say notifications from various tools,
-emails, my upcoming calendar events, who is on call and who is on vacation etc.
-Then Claude would print that data in a nice table and finally write a short
-summary highlighting important findings. Interestingly enough, one of the first
+Now that I had these scripts available I could wire them up as Claude skills,
+short text snippets that tell Claude how to do something (more
+[here](https://code.claude.com/docs/en/skills)). For instance, '/briefing'
+would fetch notifications from various tools, emails, upcoming calendar events,
+who is on call and who is on vacation, print that data in a table and write a
+short summary highlighting important findings. Interestingly enough, one of the first
 times I used this skill it informed me that the engineer who was on-call the
 following week also was on vacation. Nice save.
 
