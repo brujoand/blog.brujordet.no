@@ -62,7 +62,7 @@ this:
 ffmpeg \
   -use_wallclock_as_timestamps 1 -fflags nobuffer -loglevel warning -hide_banner \
   -rtsp_transport tcp -hwaccel qsv -c:v hevc_qsv \
-  -i 'rtsp://admin:password@10.20.1.14:554' \
+  -i 'rtsp://admin:password@192.0.2.14:554' \
   -vf 'fps=fps=20,scale_qsv=w=3840:h=2160' -c:v h264_qsv -timestamp now -g 100 \
   -profile main -b:v 6M -c:a copy -f rtsp -rtsp_transport tcp rtsp://0.0.0.0:8554/stua \
   -vf 'fps=fps=5,scale_qsv=w=1280:h=720' -c:v h264_qsv -timestamp now -g 25 \
@@ -82,7 +82,7 @@ Input and global arguments:
 - `-rtsp_transport tcp`: Using tcp rather than udp for the input stream
 - `hwaccel qsv`: Use Intel QuickSync for hardware acceleration
 - `-c:v hevrc_qsv`: Use the hevc decoder from Intel QuickSync to decode the input stream
-- `-i 'rtsp://admin:password@10.20.1.14:554'`: Finally we have our input stream from the Reolink camera
+- `-i 'rtsp://admin:password@192.0.2.14:554'`: Finally we have our input stream from the Reolink camera
 
 Output arguments for the main stream:
 - `'fps=fps=20,scale_qsv=w=3840:h=2160'`: Set it to 20fps and 4k resolution at 3840x2160
@@ -145,7 +145,7 @@ needed to set the paths of the mainstream and substreams:
     paths:
       stua:
         runOnInit:
-          ffmpeg <input_flags> -i 'rtsp://admin:password@10.20.1.14:554' \
+          ffmpeg <input_flags> -i 'rtsp://admin:password@192.0.2.14:554' \
             <main_output_flags> rtsp://0.0.0.0:8554/stua \
             <sub_output_flags> rtsp://0.0.0.0:8554/stua_sub
         runOnInitRestart: yes
